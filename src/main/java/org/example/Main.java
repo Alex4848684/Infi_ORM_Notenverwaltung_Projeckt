@@ -23,17 +23,26 @@ public class Main {
 
         try (ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl, username, password)) {
 
-            TableUtils.createTableIfNotExists(connectionSource, Schueler.class);
-            TableUtils.createTableIfNotExists(connectionSource, Note.class);
+            // Drop and create tables to ensure schema is up-to-date
+            TableUtils.dropTable(connectionSource, Schueler.class, true);
+            TableUtils.createTable(connectionSource, Schueler.class);
+            TableUtils.dropTable(connectionSource, Lehrer.class, true); // Drop Lehrer table
+            TableUtils.createTable(connectionSource, Lehrer.class); // Create Lehrer table
+            TableUtils.dropTable(connectionSource, Note.class, true);
+            TableUtils.createTable(connectionSource, Note.class);
 
             Dao<Schueler, Integer> schuelerDao = DaoManager.createDao(connectionSource, Schueler.class);
             Dao<Note, Integer> notenDao = DaoManager.createDao(connectionSource, Note.class);
+            Dao<Lehrer, Integer> lehrerDao = DaoManager.createDao(connectionSource, Lehrer.class); // Create Lehrer DAO
 
-            System.out.println("Lege neuen Schüler und Note an...");
+            System.out.println("Lege neuen Schüler, Lehrer und Note an...");
             Schueler s1 = new Schueler("Max", "Mustermann", "3A");
             schuelerDao.create(s1);
             
-            Note n1 = new Note("Mathe", 1, s1);
+            Lehrer l1 = new Lehrer("Anna", "Schmidt"); // Create a new teacher
+            lehrerDao.create(l1);
+
+            Note n1 = new Note("Mathe", 1, s1, l1); // Pass the teacher to the Note constructor
             notenDao.create(n1);
 
             System.out.println("\n--- Aktuelle Daten in der Datenbank ---");
@@ -43,7 +52,7 @@ public class Main {
                 
                 List<Note> schuelerNoten = notenDao.queryForEq("schueler_id", s.getId());
                 for (Note n : schuelerNoten) {
-                    System.out.println("  -> Note: " + n.getFach() + " (" + n.getWert() + ")");
+                    System.out.println("  -> Note: " + n.getFach() + " (" + n.getWert() + ") am " + n.getDatum() + " eingetragen von " + n.getLehrer().getNachname());
                 }
             }
 
