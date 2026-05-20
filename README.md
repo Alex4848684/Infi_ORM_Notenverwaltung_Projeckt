@@ -1,5 +1,5 @@
 Pflichten:
-1. Die Noten von den Schülern mittel Forey Key anzeigen lassen
+1. Die Noten von den Schülern mittel Foreign Key anzeigen lassen
 2. Ein Datum Hinzufügen wann die Noten hinzugefügt wurden
 3. Den Noten Durchschnit der Klasse ausrechnen
 4. Räume wo die Fächer Statfinden
