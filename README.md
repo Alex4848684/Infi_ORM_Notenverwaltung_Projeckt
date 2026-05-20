@@ -3,8 +3,8 @@ Pflichten:
 2. Ein Datum Hinzufügen wann die Noten hinzugefügt wurden
 3. Den Noten Durchschnit der Klasse ausrechnen
 4. Räume wo die Fächer Statfinden
-2. Die Lehrer die die Fächer unterrichten
-3. Die Schüler in Klassen einteilen
+5. Die Lehrer die die Fächer unterrichten
+6. Die Schüler in Klassen einteilen
 
 Eventuell:
 
