@@ -1,3 +1,5 @@
+Notenverwaltungssystem für Schulen
+
 Pflichten:
 1. Die Noten der Schüler mittels Foreign Key anzeigen lassen
 2. Ein Datum hinzufügen, wann die Noten hinzugefügt wurden
