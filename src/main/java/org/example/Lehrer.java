@@ -15,13 +15,17 @@ public class Lehrer {
     @DatabaseField(canBeNull = false)
     private String nachname;
 
+    @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "raum_name", foreignColumnName = "name")
+    private Raum raum; // New field for the assigned room
+
     public Lehrer() {
         // ORMLite needs a no-arg constructor
     }
 
-    public Lehrer(String vorname, String nachname) {
+    public Lehrer(String vorname, String nachname, Raum raum) {
         this.vorname = vorname;
         this.nachname = nachname;
+        this.raum = raum;
     }
 
     // Getters and Setters
@@ -49,12 +53,21 @@ public class Lehrer {
         this.nachname = nachname;
     }
 
+    public Raum getRaum() {
+        return raum;
+    }
+
+    public void setRaum(Raum raum) {
+        this.raum = raum;
+    }
+
     @Override
     public String toString() {
         return "Lehrer{" +
                "id=" + id +
                ", vorname='" + vorname + '\'' +
                ", nachname='" + nachname + '\'' +
+               ", raum=" + (raum != null ? raum.getName() : "null") +
                '}';
     }
 }

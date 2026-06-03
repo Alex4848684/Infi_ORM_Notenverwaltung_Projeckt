@@ -1,21 +1,23 @@
 Notenverwaltungssystem für Schulen
 
-Pflichten:
-1. Die Noten der Schüler mittels Foreign Key anzeigen lassen
-2. Ein Datum hinzufügen, wann die Noten hinzugefügt wurden
-3. Den Notendurchschnitt der Klasse berechnen
-4. Räume, in denen die Fächer stattfinden
-5. Die Lehrer, die die Fächer unterrichten
-6. Die Schüler in Klassen einteilen
+**Aktueller Stand:**
 
-Eventuell:
-1. CSV Daten exportort
-2. Suplierung
+**Pflichten:**
+1. Die Noten der Schüler mittels Foreign Key anzeigen lassen - **ERLEDIGT**
+2. Ein Datum hinzufügen, wann die Noten hinzugefügt wurden - **ERLEDIGT**
+3. Den Notendurchschnitt der Klasse berechnen - **TEILWEISE ERLEDIGT** (Der Notendurchschnitt pro Schüler wird berechnet und in der Schüler-Tabelle gespeichert, **Noten im österreichischen System (1-5)**)
+4. Räume, in denen die Fächer stattfinden - **TEILWEISE ERLEDIGT** (Räume sind implementiert und Schülern und Lehrern zugewiesen)
+5. Die Lehrer, die die Fächer unterrichten - **ERLEDIGT**
+6. Die Schüler in Klassen einteilen - **ERLEDIGT**
 
+**Eventuell:**
+1. CSV Daten exportieren - **OFFEN**
+2. Suplierung - **OFFEN**
 
-
-
-
-Anforderungen:
-1. Schuler, Lehrer, Noten, Klasse, Raum Tabelle
-
+**Anforderungen:**
+1. Schueler, Lehrer, Noten, Klasse, Raum Tabelle
+    *   Schueler-Tabelle - **ERLEDIGT**
+    *   Lehrer-Tabelle - **ERLEDIGT**
+    *   Noten-Tabelle - **ERLEDIGT**
+    *   Klasse-Tabelle - **OFFEN** (Derzeit als String-Feld in der Schueler-Tabelle, nicht als separate Entität)
+    *   Raum-Tabelle - **ERLEDIGT**
