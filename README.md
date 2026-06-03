@@ -12,12 +12,11 @@ Notenverwaltungssystem für Schulen
 
 **Eventuell:**
 1. CSV Daten exportieren - **OFFEN**
-2. Suplierung - **OFFEN**
+2. Suplierung - **ERLEDIGT**
 
 **Anforderungen:**
 1. Schueler, Lehrer, Noten, Klasse, Raum Tabelle
     *   Schueler-Tabelle - **ERLEDIGT**
     *   Lehrer-Tabelle - **ERLEDIGT**
     *   Noten-Tabelle - **ERLEDIGT**
-    *   Klasse-Tabelle - **OFFEN** (Derzeit als String-Feld in der Schueler-Tabelle, nicht als separate Entität)
     *   Raum-Tabelle - **ERLEDIGT**
