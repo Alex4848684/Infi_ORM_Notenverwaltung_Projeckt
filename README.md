@@ -1,22 +1,24 @@
-Notenverwaltungssystem für Schulen
+# Notenverwaltungssystem für Schulen
 
-**Aktueller Stand:**
+## Voraussetzungen
+- Java 25
+- MySQL
 
-**Pflichten:**
-1. Die Noten der Schüler mittels Foreign Key anzeigen lassen
-2. Ein Datum hinzufügen, wann die Noten hinzugefügt wurden
-3. Den Notendurchschnitt der Klasse berechnen (Der Notendurchschnitt pro Schüler wird berechnet und in der Schüler-Tabelle gespeichert, Noten im österreichischen System 1-5)
-4. Räume, in denen die Fächer stattfinden (Räume sind implementiert und Schülern und Lehrern zugewiesen)
-5. Die Lehrer, die die Fächer unterrichten
-6. Die Schüler in Klassen einteilen
+## Datenbank
 
-**Eventuell:**
-1. CSV Daten exportieren
-2. Suplierung
+Erstellen Sie eine MySQL-Datenbank mit folgenden Tabellen:
 
-**Anforderungen:**
-1. Schueler, Lehrer, Noten, Klasse, Raum Tabelle
-    *   Schueler-Tabelle
-    *   Lehrer-Tabelle
-    *   Noten-Tabelle
-    *   Raum-Tabelle
+- Schueler
+- Lehrer
+- Noten
+- Raum
+
+## Datenbankverbindung
+
+Passen Sie die MySQL-Daten in den Zeilen 28–30 an:
+
+```java
+String databaseUrl = "jdbc:mysql://localhost:3306/schulverwaltung?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true";
+String username = "IHR_BENUTZERNAME";
+String password = "IHR_PASSWORT";
+```
