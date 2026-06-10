@@ -98,81 +98,94 @@ public class Main {
             // --- Schüler interaktiv eingeben ---
             System.out.println("=== SCHÜLER EINGEBEN ===");
             List<Schueler> schuelerListe = new java.util.ArrayList<>();
-            boolean moreSchueler = true;
+            System.out.print("Möchtest du Schüler hinzufügen? (j/n): ");
+            String schuelerHinzuHinzufuegen = scanner.nextLine().toLowerCase();
 
-            while (moreSchueler) {
-                System.out.print("Gib den Vornamen des Schülers ein: ");
-                String vorname = scanner.nextLine();
+            if (schuelerHinzuHinzufuegen.equals("j")) {
+                boolean moreSchueler = true;
 
-                System.out.print("Gib den Nachnamen des Schülers ein: ");
-                String nachname = scanner.nextLine();
+                while (moreSchueler) {
+                    System.out.print("Gib den Vornamen des Schülers ein: ");
+                    String vorname = scanner.nextLine();
 
-                System.out.print("Gib die Klasse ein (z.B. 3A): ");
-                String klasse = scanner.nextLine();
+                    System.out.print("Gib den Nachnamen des Schülers ein: ");
+                    String nachname = scanner.nextLine();
 
-                // Prüfe ob Schüler bereits existiert
-                Schueler existierenderSchueler = schuelerDao.queryBuilder()
-                    .where().eq("vorname", vorname).and().eq("nachname", nachname).and().eq("klasse", klasse)
-                    .queryForFirst();
+                    System.out.print("Gib die Klasse ein (z.B. 3A): ");
+                    String klasse = scanner.nextLine();
 
-                if (existierenderSchueler != null) {
-                    System.out.println("Schüler " + vorname + " " + nachname + " existiert bereits. Wird ignoriert.\n");
-                    schuelerListe.add(existierenderSchueler);
-                } else {
-                    Schueler neuerSchueler = new Schueler(vorname, nachname, klasse, r1);
-                    schuelerDao.create(neuerSchueler);
-                    schuelerListe.add(neuerSchueler);
-                    System.out.println("Schüler " + vorname + " " + nachname + " hinzugefügt.\n");
-                }
+                    // Prüfe ob Schüler bereits existiert
+                    Schueler existierenderSchueler = schuelerDao.queryBuilder()
+                        .where().eq("vorname", vorname).and().eq("nachname", nachname).and().eq("klasse", klasse)
+                        .queryForFirst();
 
-                System.out.print("Möchtest du einen weiteren Schüler hinzufügen? (j/n): ");
-                String antwort = scanner.nextLine().toLowerCase();
-                if (!antwort.equals("j")) {
-                    moreSchueler = false;
+                    if (existierenderSchueler != null) {
+                        System.out.println("Schüler " + vorname + " " + nachname + " existiert bereits. Wird ignoriert.\n");
+                        schuelerListe.add(existierenderSchueler);
+                    } else {
+                        Schueler neuerSchueler = new Schueler(vorname, nachname, klasse, r1);
+                        schuelerDao.create(neuerSchueler);
+                        schuelerListe.add(neuerSchueler);
+                        System.out.println("Schüler " + vorname + " " + nachname + " hinzugefügt.\n");
+                    }
+
+                    System.out.print("Möchtest du einen weiteren Schüler hinzufügen? (j/n): ");
+                    String antwort = scanner.nextLine().toLowerCase();
+                    if (!antwort.equals("j")) {
+                        moreSchueler = false;
+                    }
                 }
             }
 
             // --- Noten interaktiv eingeben ---
             System.out.println("\n=== NOTEN EINGEBEN ===");
-            List<String> faecher = Arrays.asList("Mathe", "Deutsch", "Englisch", "Chemie", "Physik");
-            List<Lehrer> lehrerListe = lehrerDao.queryForAll();
+            if (!schuelerListe.isEmpty()) {
+                List<String> faecher = Arrays.asList("Mathe", "Deutsch", "Englisch", "Chemie", "Physik");
+                List<Lehrer> lehrerListe = lehrerDao.queryForAll();
 
-            for (Schueler schueler : schuelerListe) {
-                System.out.println("\nNoten für " + schueler.getVorname() + " " + schueler.getNachname() + ":");
+                for (Schueler schueler : schuelerListe) {
+                    System.out.println("\nNoten für " + schueler.getVorname() + " " + schueler.getNachname() + ":");
 
-                for (String fach : faecher) {
-                    boolean gueltigeNote = false;
-                    while (!gueltigeNote) {
-                        try {
-                            System.out.print("  Gib die Note für " + fach + " ein (1-5): ");
-                            int wert = Integer.parseInt(scanner.nextLine());
+                    for (String fach : faecher) {
+                        boolean gueltigeNote = false;
+                        while (!gueltigeNote) {
+                            try {
+                                System.out.print("  Gib die Note für " + fach + " ein (1-5): ");
+                                int wert = Integer.parseInt(scanner.nextLine());
 
-                            if (wert >= 1 && wert <= 5) {
-                                Lehrer zugewiesenerLehrer = lehrerListe.get(0);
-                                Note neueNote = new Note(fach, wert, schueler, zugewiesenerLehrer);
-                                notenDao.create(neueNote);
-                                gueltigeNote = true;
-                            } else {
-                                System.out.println("  Ungültig! Die Note muss zwischen 1 und 5 liegen.");
+                                if (wert >= 1 && wert <= 5) {
+                                    Lehrer zugewiesenerLehrer = lehrerListe.get(0);
+                                    Note neueNote = new Note(fach, wert, schueler, zugewiesenerLehrer);
+                                    notenDao.create(neueNote);
+                                    gueltigeNote = true;
+                                } else {
+                                    System.out.println("  Ungültig! Die Note muss zwischen 1 und 5 liegen.");
+                                }
+                            } catch (NumberFormatException e) {
+                                System.out.println("  Ungültige Eingabe! Bitte gib eine Zahl zwischen 1 und 5 ein.");
                             }
-                        } catch (NumberFormatException e) {
-                            System.out.println("  Ungültige Eingabe! Bitte gib eine Zahl zwischen 1 und 5 ein.");
                         }
                     }
                 }
+            } else {
+                System.out.println("Keine Schüler vorhanden. Überspringe Noten-Eingabe.");
             }
 
             // --- Notendurchschnitt berechnen ---
             System.out.println("\n=== DURCHSCHNITTE BERECHNEN ===");
-            for (Schueler schueler : schuelerListe) {
-                String[] resultAvg = notenDao.queryBuilder()
-                    .selectRaw("AVG(wert)")
-                    .where().eq("schueler_id", schueler.getId())
-                    .queryRawFirst();
-                double avgValue = resultAvg != null ? Double.parseDouble(resultAvg[0]) : 0;
-                
-                schueler.setSchuelerDurchschnitt(avgValue);
-                schuelerDao.update(schueler);
+            if (!schuelerListe.isEmpty()) {
+                for (Schueler schueler : schuelerListe) {
+                    String[] resultAvg = notenDao.queryBuilder()
+                        .selectRaw("AVG(wert)")
+                        .where().eq("schueler_id", schueler.getId())
+                        .queryRawFirst();
+                    double avgValue = resultAvg != null ? Double.parseDouble(resultAvg[0]) : 0;
+
+                    schueler.setSchuelerDurchschnitt(avgValue);
+                    schuelerDao.update(schueler);
+                }
+            } else {
+                System.out.println("Keine Schüler vorhanden. Überspringe Durchschnittsberechnung.");
             }
 
             // --- Räume ändern ---
@@ -181,30 +194,60 @@ public class Main {
             String raumAntwort = scanner.nextLine().toLowerCase();
 
             while (raumAntwort.equals("j")) {
-                System.out.print("Welchen Raum möchtest du suplieren? (z.B. A101): ");
-                String alterRaum = scanner.nextLine();
+                System.out.println("\nVerfügbare Räume:");
+                List<Raum> allRaumeForSupl = raumDao.queryForAll();
+                List<Lehrer> allLehrerForSupl = lehrerDao.queryForAll();
 
-                Raum zuaendernderRaum = raumDao.queryBuilder()
-                    .where().eq("name", alterRaum)
-                    .queryForFirst();
-
-                if (zuaendernderRaum != null) {
-                    System.out.print("Gib den neuen Raumnamen ein: ");
-                    String neuerRaumName = scanner.nextLine();
-
-                    try {
-                        System.out.print("Gib die neue Kapazität ein: ");
-                        int neueKapazitaet = Integer.parseInt(scanner.nextLine());
-
-                        zuaendernderRaum.setName(neuerRaumName);
-                        zuaendernderRaum.setKapazitaet(neueKapazitaet);
-                        raumDao.update(zuaendernderRaum);
-                        System.out.println("Raum erfolgreich in der Datenbank aktualisiert.\n");
-                    } catch (NumberFormatException e) {
-                        System.out.println("Ungültige Eingabe! Die Kapazität muss eine Zahl sein.\n");
+                for (int i = 0; i < allRaumeForSupl.size(); i++) {
+                    Raum r = allRaumeForSupl.get(i);
+                    // Find teachers assigned to this room
+                    StringBuilder teacherNames = new StringBuilder();
+                    for (Lehrer l : allLehrerForSupl) {
+                        if (l.getRaum() != null && l.getRaum().getName().equals(r.getName())) {
+                            if (!teacherNames.isEmpty()) {
+                                teacherNames.append(", ");
+                            }
+                            teacherNames.append(l.getVorname()).append(" ").append(l.getNachname());
+                        }
                     }
-                } else {
-                    System.out.println("Raum nicht gefunden.\n");
+                    String teachers = !teacherNames.isEmpty() ? teacherNames.toString() : "keine";
+                    System.out.println((i + 1) + ". " + r.getName() + " (Kapazität: " + r.getKapazitaet() + ", Lehrer: " + teachers + ")");
+                }
+
+                System.out.print("\nWähle einen Raum zum Suplieren (Nummer eingeben): ");
+                try {
+                    int raumWahl = Integer.parseInt(scanner.nextLine()) - 1;
+
+                    if (raumWahl >= 0 && raumWahl < allRaumeForSupl.size()) {
+                        Raum zuaendernderRaum = allRaumeForSupl.get(raumWahl);
+                        System.out.print("Gib den neuen Raumnamen ein: ");
+                        String neuerRaumName = scanner.nextLine();
+
+                        // Check if new name already exists (and is not the same as old name)
+                        Raum existingWithNewName = raumDao.queryBuilder()
+                            .where().eq("name", neuerRaumName)
+                            .queryForFirst();
+
+                        if (existingWithNewName != null && existingWithNewName.getId() != zuaendernderRaum.getId()) {
+                            System.out.println("Fehler: Ein Raum mit dem Namen '" + neuerRaumName + "' existiert bereits.\n");
+                        } else {
+                            try {
+                                System.out.print("Gib die neue Kapazität ein: ");
+                                int neueKapazitaet = Integer.parseInt(scanner.nextLine());
+
+                                zuaendernderRaum.setName(neuerRaumName);
+                                zuaendernderRaum.setKapazitaet(neueKapazitaet);
+                                raumDao.update(zuaendernderRaum);
+                                System.out.println("Raum erfolgreich in der Datenbank aktualisiert.\n");
+                            } catch (NumberFormatException e) {
+                                System.out.println("Ungültige Eingabe! Die Kapazität muss eine Zahl sein.\n");
+                            }
+                        }
+                    } else {
+                        System.out.println("Ungültige Auswahl. Bitte gib eine Nummer zwischen 1 und " + allRaumeForSupl.size() + " ein.\n");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Ungültige Eingabe! Bitte gib eine Raum ID ein.\n");
                 }
 
                 System.out.print("Möchtest du noch einen Raum suplieren? (j/n): ");

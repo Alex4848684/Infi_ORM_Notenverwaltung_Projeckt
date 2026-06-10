@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,6 +20,7 @@ import java.util.List;
 public class CSV_Export {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final SimpleDateFormat FILE_TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     public static void exportAll(ConnectionSource connectionSource, String outDir) throws SQLException, IOException {
         Dao<Raum, Integer> raumDao = DaoManager.createDao(connectionSource, Raum.class);
