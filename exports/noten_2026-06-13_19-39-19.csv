@@ -55,3 +55,8 @@ id,fach,wert,schueler_id,schueler_name,lehrer_id,lehrer_name,datum
 54,Englisch,3,12,Anton Schmit,1,Anna Schmidt,2026-06-10 09:09:10
 55,Chemie,4,12,Anton Schmit,1,Anna Schmidt,2026-06-10 09:09:11
 56,Physik,3,12,Anton Schmit,1,Anna Schmidt,2026-06-10 09:09:11
+57,Mathe,1,13,Jakop Neuer,1,Anna Schmidt,2026-06-13 19:38:28
+58,Deutsch,2,13,Jakop Neuer,1,Anna Schmidt,2026-06-13 19:38:29
+59,Englisch,3,13,Jakop Neuer,1,Anna Schmidt,2026-06-13 19:38:29
+60,Chemie,1,13,Jakop Neuer,1,Anna Schmidt,2026-06-13 19:38:30
+61,Physik,2,13,Jakop Neuer,1,Anna Schmidt,2026-06-13 19:38:30

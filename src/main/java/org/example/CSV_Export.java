@@ -35,10 +35,12 @@ public class CSV_Export {
             }
         }
 
-        exportRaeume(raumDao, new File(dir, "raeume.csv"));
-        exportLehrer(lehrerDao, new File(dir, "lehrer.csv"));
-        exportSchueler(schuelerDao, new File(dir, "schueler.csv"));
-        exportNoten(notenDao, new File(dir, "noten.csv"));
+        String timestamp = FILE_TIMESTAMP_FORMAT.format(new Date());
+
+        exportRaeume(raumDao, new File(dir, "raeume_" + timestamp + ".csv"));
+        exportLehrer(lehrerDao, new File(dir, "lehrer_" + timestamp + ".csv"));
+        exportSchueler(schuelerDao, new File(dir, "schueler_" + timestamp + ".csv"));
+        exportNoten(notenDao, new File(dir, "noten_" + timestamp + ".csv")); 
     }
 
     private static void exportRaeume(Dao<Raum, Integer> dao, File outFile) throws SQLException, IOException {
