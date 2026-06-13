@@ -6,7 +6,7 @@
 
 ## Datenbank
 
-Erstellen Sie eine MySQL-Datenbank mit folgenden Tabellen:
+Erstellen Sie eine MySQL-Datenbank mit dem Namen: schulverwaltung und fals die Tabellen nicht automatisch erstelt werden nach dem Ausführen folgenden Tabellen:
 
 - Schueler
 - Lehrer
