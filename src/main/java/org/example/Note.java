@@ -21,10 +21,10 @@ public class Note {
     private Schueler schueler;
 
     @DatabaseField(canBeNull = false)
-    private Date datum; // New field for the date
+    private Date datum;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "lehrer_id")
-    private Lehrer lehrer; // New field for the teacher
+    private Lehrer lehrer;
 
     public Note() {}
 
@@ -33,7 +33,7 @@ public class Note {
         this.wert = wert;
         this.schueler = schueler;
         this.lehrer = lehrer;
-        this.datum = new Date(); // Set current date when a note is created
+        this.datum = new Date();
     }
 
     public int getId() { return id; }

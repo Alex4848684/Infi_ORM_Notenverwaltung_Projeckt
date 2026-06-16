@@ -22,7 +22,6 @@ public class Main {
             System.err.println("MySQL Treiber nicht gefunden!");
         }
 
-        // Suppress ORMLite info logs (they use SLF4J bound to java.util.logging in this project)
         Logger.getLogger("com.j256.ormlite").setLevel(Level.WARNING);
 
         String databaseUrl = "jdbc:mysql://localhost:3306/schulverwaltung?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true";
@@ -44,7 +43,6 @@ public class Main {
 
             Scanner scanner = new Scanner(System.in);
 
-            // --- Räume vordefiniert erstellen (nur wenn nicht vorhanden) ---
             System.out.println("=== RÄUME INITIALISIEREN ===");
             Raum r1 = raumDao.queryBuilder().where().eq("name", "A101").queryForFirst();
             if (r1 == null) {
@@ -74,7 +72,6 @@ public class Main {
             }
             System.out.println();
 
-            // --- Lehrer vordefiniert erstellen (nur wenn nicht vorhanden) ---
             System.out.println("=== LEHRER INITIALISIEREN ===");
             Lehrer l1 = lehrerDao.queryBuilder().where().eq("vorname", "Anna").and().eq("nachname", "Schmidt").queryForFirst();
             if (l1 == null) {
@@ -95,7 +92,7 @@ public class Main {
             }
             System.out.println();
 
-            // --- Schüler interaktiv eingeben ---
+
             System.out.println("=== SCHÜLER EINGEBEN ===");
             List<Schueler> schuelerListe = new java.util.ArrayList<>();
             System.out.print("Möchtest du Schüler hinzufügen? (j/n): ");
@@ -114,7 +111,7 @@ public class Main {
                     System.out.print("Gib die Klasse ein (z.B. 3A): ");
                     String klasse = scanner.nextLine();
 
-                    // Prüfe ob Schüler bereits existiert
+
                     Schueler existierenderSchueler = schuelerDao.queryBuilder()
                         .where().eq("vorname", vorname).and().eq("nachname", nachname).and().eq("klasse", klasse)
                         .queryForFirst();
@@ -137,7 +134,7 @@ public class Main {
                 }
             }
 
-            // --- Noten interaktiv eingeben ---
+
             System.out.println("\n=== NOTEN EINGEBEN ===");
             if (!schuelerListe.isEmpty()) {
                 List<String> faecher = Arrays.asList("Mathe", "Deutsch", "Englisch", "Chemie", "Physik");
@@ -171,7 +168,6 @@ public class Main {
                 System.out.println("Keine Schüler vorhanden. Überspringe Noten-Eingabe.");
             }
 
-            // --- Notendurchschnitt berechnen ---
             System.out.println("\n=== DURCHSCHNITTE BERECHNEN ===");
             if (!schuelerListe.isEmpty()) {
                 for (Schueler schueler : schuelerListe) {
@@ -200,7 +196,6 @@ public class Main {
 
                 for (int i = 0; i < allRaumeForSupl.size(); i++) {
                     Raum r = allRaumeForSupl.get(i);
-                    // Find teachers assigned to this room
                     StringBuilder teacherNames = new StringBuilder();
                     for (Lehrer l : allLehrerForSupl) {
                         if (l.getRaum() != null && l.getRaum().getName().equals(r.getName())) {
@@ -223,7 +218,6 @@ public class Main {
                         System.out.print("Gib den neuen Raumnamen ein: ");
                         String neuerRaumName = scanner.nextLine();
 
-                        // Check if new name already exists (and is not the same as old name)
                         Raum existingWithNewName = raumDao.queryBuilder()
                             .where().eq("name", neuerRaumName)
                             .queryForFirst();
@@ -254,7 +248,6 @@ public class Main {
                 raumAntwort = scanner.nextLine().toLowerCase();
             }
 
-            // --- Räume hinzufügen ---
             System.out.println("\n=== RÄUME HINZUFÜGEN ===");
             System.out.print("Möchtest du einen neuen Raum hinzufügen? (j/n): ");
             String raumHinzufuegen = scanner.nextLine().toLowerCase();
@@ -263,7 +256,6 @@ public class Main {
                 System.out.print("Gib den Namen des neuen Raums ein (z.B. D301): ");
                 String raumName = scanner.nextLine();
 
-                // Prüfe ob Raum bereits existiert
                 Raum existierenderRaum = raumDao.queryBuilder().where().eq("name", raumName).queryForFirst();
                 if (existierenderRaum != null) {
                     System.out.println("Raum " + raumName + " existiert bereits. Wird ignoriert.\n");
@@ -284,7 +276,6 @@ public class Main {
                 raumHinzufuegen = scanner.nextLine().toLowerCase();
             }
 
-            // --- Lehrer hinzufügen ---
             System.out.println("\n=== LEHRER HINZUFÜGEN ===");
             System.out.print("Möchtest du einen neuen Lehrer hinzufügen? (j/n): ");
             String lehrerHinzufuegen = scanner.nextLine().toLowerCase();
@@ -296,7 +287,6 @@ public class Main {
                 System.out.print("Gib den Nachnamen des Lehrers ein: ");
                 String lehrerNachname = scanner.nextLine();
 
-                // Prüfe ob Lehrer bereits existiert
                 Lehrer existierenderLehrer = lehrerDao.queryBuilder()
                     .where().eq("vorname", lehrerVorname).and().eq("nachname", lehrerNachname)
                     .queryForFirst();
@@ -333,7 +323,6 @@ public class Main {
                 lehrerHinzufuegen = scanner.nextLine().toLowerCase();
             }
 
-            // --- Lehrer löschen ---
             System.out.println("\n=== LEHRER LÖSCHEN ===");
             System.out.print("Möchtest du einen Lehrer löschen? (j/n): ");
             String lehrerLoeschen = scanner.nextLine().toLowerCase();
@@ -366,7 +355,6 @@ public class Main {
                 lehrerLoeschen = scanner.nextLine().toLowerCase();
             }
 
-            // --- Ausgabe aller Daten ---
             System.out.println("\n=== AKTUELLE DATEN IN DER DATENBANK ===");
             schuelerListe = schuelerDao.queryForAll();
             for (Schueler s : schuelerListe) {
@@ -386,7 +374,6 @@ public class Main {
                 System.out.println("Raum: " + r.getName() + " (Kapazität: " + r.getKapazitaet() + ")");
             }
 
-            // Optional: CSV-Export anbieten
             System.out.print("\nMöchtest du die Daten als CSV exportieren? (j/n): ");
             String exportAntwort = scanner.nextLine().toLowerCase();
             if (exportAntwort.equals("j")) {

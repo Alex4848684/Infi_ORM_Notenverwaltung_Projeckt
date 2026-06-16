@@ -18,12 +18,11 @@ public class Schueler {
     @DatabaseField
     private String klasse;
 
-    // Changed to use 'name' as foreign column
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "raum_name", foreignColumnName = "name")
-    private Raum raum; // New field for the room
+    private Raum raum;
 
     @DatabaseField
-    private double schuelerDurchschnitt; // New field for student average
+    private double schuelerDurchschnitt;
 
     public Schueler() {}
 

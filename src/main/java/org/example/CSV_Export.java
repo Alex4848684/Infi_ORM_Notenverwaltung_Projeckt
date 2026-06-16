@@ -13,10 +13,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Utility class to export database tables to CSV files.
- * Usage: CSV_Export.exportAll(connectionSource, "output/directory");
- */
 public class CSV_Export {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

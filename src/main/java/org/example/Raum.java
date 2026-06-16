@@ -13,10 +13,9 @@ public class Raum {
     private String name;
 
     @DatabaseField
-    private int kapazitaet; // Optional: Kapazität des Raumes
+    private int kapazitaet;
 
     public Raum() {
-        // ORMLite needs a no-arg constructor
     }
 
     public Raum(String name, int kapazitaet) {

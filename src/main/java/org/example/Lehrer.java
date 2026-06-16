@@ -16,10 +16,8 @@ public class Lehrer {
     private String nachname;
 
     @DatabaseField(foreign = true, foreignAutoRefresh = true, columnName = "raum_name", foreignColumnName = "name")
-    private Raum raum; // New field for the assigned room
-
+    private Raum raum;
     public Lehrer() {
-        // ORMLite needs a no-arg constructor
     }
 
     public Lehrer(String vorname, String nachname, Raum raum) {
